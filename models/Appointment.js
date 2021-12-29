@@ -27,6 +27,10 @@ const AppointmentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  isVisited: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 const Appointment = mongoose.model("Appointment", AppointmentSchema);
