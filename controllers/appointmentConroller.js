@@ -109,9 +109,31 @@ async function todaysAppointments(req, res) {
     });
   } catch (err) {
     res.status(500).json({
-      error: "There was a server side"
-    })
+      error: "There was a server side",
+    });
   }
+}
+
+// update status
+function updateStatus(req, res) {
+  const id = req.query.id;
+  const status = req.query.status;
+  Appointment.findByIdAndUpdate(
+    id,
+    { $set: { status: status } },
+    { new: true },
+    (err, appointment) => {
+      if (!err) {
+        res.status(200).json({
+          data: appointment,
+        });
+      } else {
+        res.status(500).json({
+          error: "There was a server side error",
+        });
+      }
+    }
+  );
 }
 
 module.exports = {
@@ -121,4 +143,5 @@ module.exports = {
   getAllAppointment,
   getPendingAppointments,
   todaysAppointments,
+  updateStatus,
 };
