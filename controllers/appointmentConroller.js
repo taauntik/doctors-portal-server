@@ -7,6 +7,8 @@ async function addAppointment(req, res) {
   try {
     const newAppointment = new Appointment({
       ...appointment,
+      date: new Date(appointment.date),
+      createdAt: new Date(appointment.createdAt),
     });
     const result = await newAppointment.save();
     res.status(200).json({
@@ -69,8 +71,54 @@ function changeIsVisited(req, res) {
   );
 }
 
+// get all the appointments
+async function getAllAppointment(req, res) {
+  try {
+    const appointments = await Appointment.find({});
+    res.status(200).json({
+      data: appointments,
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server side error",
+    });
+  }
+}
+
+// get all pending appointments
+async function getPendingAppointments(req, res) {
+  try {
+    const result = await Appointment.find({ status: "Pending" });
+    res.status(200).json({
+      data: result,
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server side error!",
+    });
+  }
+}
+
+// get today's appointments
+async function todaysAppointments(req, res) {
+  try {
+    const today = new Date().toLocaleDateString();
+    const result = await Appointment.find({ date: new Date(today) });
+    res.status(200).json({
+      data: result,
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server side"
+    })
+  }
+}
+
 module.exports = {
   addAppointment,
   getAppointmentsByDate,
   changeIsVisited,
+  getAllAppointment,
+  getPendingAppointments,
+  todaysAppointments,
 };

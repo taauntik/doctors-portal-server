@@ -21,6 +21,11 @@ const AppointmentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  gender: {
+    type: String,
+    enum: ["Male", "Female", "Other"],
+    required: true,
+  },
   date: Date,
   createdAt: Date,
   service: {
@@ -30,6 +35,11 @@ const AppointmentSchema = mongoose.Schema({
   isVisited: {
     type: Boolean,
     default: false,
+  },
+  status: {
+    type: String,
+    enum: ["Pending", "Approved", "Rejected"],
+    default: "Pending",
   }
 });
 
