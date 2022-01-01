@@ -19,12 +19,17 @@ const UserSchema = mongoose.Schema(
       enum: ["doctor", "user"],
       default: "user",
     },
+    avatar: {
+      type: String,
+      required: true,
+    },
     appointments: [
-        {
-            type: mongoose.Types.ObjectId,
-            ref: "Appointment"
-        }
-    ]
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Appointment",
+        default: [],
+      },
+    ],
   },
   {
     timestamps: true,

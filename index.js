@@ -8,12 +8,14 @@ const createError = require("http-errors");
 
 // internal imports
 const appointmentRoutes = require("./routes/appointmentRoutes");
+const userRoutes = require("./routes/userRoutes");
+const loginRoutes = require("./routes/loginRoutes");
 
 dotenv.config();
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "50mb" }));
 app.use(express.json());
 app.use(cors());
 
@@ -29,6 +31,8 @@ mongoose
 
 // routing setup
 app.use("/appointment", appointmentRoutes);
+app.use("/user", userRoutes);
+app.use("/login", loginRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hello world");
